@@ -7,7 +7,7 @@
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
   <script>
     (function(){
-      emailjs.init("YOUR_USER_ID"); // ← Your public user ID
+      emailjs.init("e6XjjZkWvQXnaJrXN"); // ← Your public user ID
     })();
   </script>
   <style>
@@ -97,7 +97,7 @@
     document.getElementById("rsvpForm").addEventListener("submit", function(e) {
       e.preventDefault();
 
-      emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+      emailjs.sendForm('service_3hwthfb', 'template_w6ir4wg', this)
         .then(() => {
           document.getElementById("rsvpForm").style.display = "none";
           document.getElementById("video-container").style.display = "block";
