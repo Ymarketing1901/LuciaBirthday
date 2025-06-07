@@ -7,7 +7,7 @@
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
   <script>
     (function(){
-      emailjs.init("e6XjjZkWvQXnaJrXN"); // ← Your public user ID
+      emailjs.init("e6XjjZkWvQXnaJrXN"); // Your public user ID
     })();
   </script>
   <style>
@@ -76,7 +76,8 @@
       <input type="checkbox" id="addSibling" onchange="toggleSibling()" />
       Add a sibling
     </label>
-    <input type="text" name="sibling_name" id="siblingName" placeholder="Sibling's First Name" style="display:none;" />
+    <input type="text" name="sibling_name" id="siblingName" placeholder="Sibling's First Name"
+           style="visibility:hidden; height:0;" />
 
     <button type="submit">Register</button>
   </form>
@@ -90,14 +91,25 @@
 
   <script>
     function toggleSibling() {
-      document.getElementById("siblingName").style.display =
-        document.getElementById("addSibling").checked ? "block" : "none";
+      const siblingInput = document.getElementById("siblingName");
+      if (document.getElementById("addSibling").checked) {
+        siblingInput.style.visibility = "visible";
+        siblingInput.style.height = "auto";
+      } else {
+        siblingInput.style.visibility = "hidden";
+        siblingInput.style.height = "0";
+      }
     }
 
     document.getElementById("rsvpForm").addEventListener("submit", function(e) {
       e.preventDefault();
 
-      emailjs.sendForm('service_3hwthfb', 'template_w6ir4wg', this)
+      const formData = new FormData(this);
+      if (!document.getElementById("addSibling").checked) {
+        formData.set("sibling_name", ""); // ensure it's always defined
+      }
+
+      emailjs.send('service_3hwthfb', 'template_w6ir4wg', Object.fromEntries(formData))
         .then(() => {
           document.getElementById("rsvpForm").style.display = "none";
           document.getElementById("video-container").style.display = "block";
@@ -109,4 +121,4 @@
   </script>
 
 </body>
-</html>
+</html> 
