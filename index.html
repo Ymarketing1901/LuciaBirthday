@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lucia's Birthday RSVP</title>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("YOUR_USER_ID"); // ← Your public user ID
+    })();
+  </script>
+  <style>
+    body {
+      background: url('lucia.png') no-repeat center center fixed;
+      background-size: cover;
+      font-family: sans-serif;
+      text-align: center;
+      color: white;
+      padding-top: 10vh;
+    }
+
+    form {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      display: inline-block;
+      border-radius: 10px;
+    }
+
+    input {
+      display: block;
+      margin: 10px auto;
+      padding: 10px;
+      font-size: 16px;
+      width: 80%;
+    }
+
+    button {
+      background-color: #ff69b4;
+      border: none;
+      color: white;
+      padding: 12px 24px;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+
+    button:hover {
+      background-color: #ff1493;
+    }
+
+    #video-container {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: black;
+      z-index: 10;
+    }
+
+    #video-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="rsvpForm">
+    <h2>RSVP to Lucia's Birthday!</h2>
+    <input type="text" name="child_name" placeholder="Child's First Name" required />
+    
+    <label>
+      <input type="checkbox" id="addSibling" onchange="toggleSibling()" />
+      Add a sibling
+    </label>
+    <input type="text" name="sibling_name" id="siblingName" placeholder="Sibling's First Name" style="display:none;" />
+
+    <button type="submit">Register</button>
+  </form>
+
+  <div id="video-container">
+    <video id="birthdayVideo" autoplay controls>
+      <source src="lucia.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <script>
+    function toggleSibling() {
+      document.getElementById("siblingName").style.display =
+        document.getElementById("addSibling").checked ? "block" : "none";
+    }
+
+    document.getElementById("rsvpForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+        .then(() => {
+          document.getElementById("rsvpForm").style.display = "none";
+          document.getElementById("video-container").style.display = "block";
+          document.getElementById("birthdayVideo").play();
+        }, (error) => {
+          alert('Oops! Something went wrong.\n' + error.text);
+        });
+    });
+  </script>
+
+</body>
+</html>
