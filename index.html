@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <title>Lucia's Birthday RSVP</title>
-  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <!-- ✅ Updated EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3.11.0/dist/email.min.js"></script>
   <script>
     (function(){
       emailjs.init("e6XjjZkWvQXnaJrXN"); // Your public user ID
@@ -106,7 +107,7 @@
 
       const formData = new FormData(this);
       if (!document.getElementById("addSibling").checked) {
-        formData.set("sibling_name", ""); // ensure it's always defined
+        formData.set("sibling_name", "");
       }
 
       emailjs.send('service_3hwthfb', 'template_w6ir4wg', Object.fromEntries(formData))
